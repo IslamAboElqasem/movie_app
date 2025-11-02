@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/Core/theme/app_colors.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   final String title;
@@ -17,7 +18,10 @@ class MovieDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movie Details'),
+        title: Text(
+          'Movie Details',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -47,7 +51,7 @@ class MovieDetailsScreen extends StatelessWidget {
             SizedBox(height: 8.h),
             Row(
               children: [
-                const Icon(Icons.star, color: Colors.amber),
+                const Icon(Icons.star, color: AppColors.starColor),
                 SizedBox(width: 4.w),
                 Text(
                   '$rating / 10',

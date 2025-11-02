@@ -23,16 +23,16 @@ class MovieCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(12.w),
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16.r),
         ),
         child: Row(
           children: [
             Container(
-              height: 70.h,
-              width: 60.w,
+              height: 120.h,
+              width: 85.w,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(8.r),
               ),
               child: const Icon(Icons.image_not_supported),
@@ -51,9 +51,9 @@ class MovieCard extends StatelessWidget {
                       Text('$rating/10',
                           style: Theme.of(context).textTheme.bodyMedium),
                       SizedBox(width: 10.w),
-                      Chip(label: Text(genre)),
                     ],
                   ),
+                  Chip(label: Text(genre)),
                 ],
               ),
             ),

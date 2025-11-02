@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Light Theme Colors
   static const Color primaryColor = Color(0xFF2196F3); // AppBar blue
-  static const Color backgroundColor = Color(0xFFFDF9FF); // Card background
+  static const Color backgroundColor = Color(0xFFF7F2FA); // Card background
   static const Color scaffoldBackground =
       Color(0xFFFFFFFF); // Screen background
   static const Color textPrimary = Color(0xFF000000); // Main text
@@ -14,11 +14,12 @@ class AppColors {
   static const Color buttonBackground =
       Color(0xFFD9D9D9); // “Load More Movies” button
   static const Color buttonTextColor = Color(0xFF9F9F9F);
+  static const Color cardImageColor = Color(0xFFE0E0E0);
 
   // Dark Theme Colors
   static const Color primaryColorDark = Color(0xFF1E1E1E); // AppBar background
   static const Color accentColorDark = Color(0xFF00BCD4); // Cyan text/icons
-  static const Color cardColorDark = Color(0xFF181818); // Movie cards
+  static const Color cardColorDark = Color(0xFF1D1B20); // Movie cards
   static const Color starColor = Color(0xFFFFC107); // Star icon
   static const Color textPrimaryDark = Color(0xFFFFFFFF);
   static const Color textSecondaryDark = Color(0xFFB0B0B0);

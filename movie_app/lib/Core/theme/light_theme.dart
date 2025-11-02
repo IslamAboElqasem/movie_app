@@ -7,7 +7,7 @@ final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: AppColors.primaryColor,
   scaffoldBackgroundColor: AppColors.scaffoldBackground,
-  cardColor: AppColors.backgroundColor,
+  cardColor: AppColors.cardImageColor,
   appBarTheme: const AppBarTheme(
     backgroundColor: AppColors.primaryColor,
     foregroundColor: Colors.white,
