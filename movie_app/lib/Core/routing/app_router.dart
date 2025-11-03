@@ -14,6 +14,14 @@ class AppRouter {
       case Routes.detailsMovieScreen:
         return MaterialPageRoute(
           builder: (_) => MovieDetailsScreen(
+            posterPath:
+                args is Map<String, dynamic> && args.containsKey('posterPath')
+                    ? args['posterPath'] as String
+                    : '',
+            overView:
+                args is Map<String, dynamic> && args.containsKey('overView')
+                    ? args['overView'] as String
+                    : '',
             title: args is Map<String, dynamic> && args.containsKey('title')
                 ? args['title'] as String
                 : '',

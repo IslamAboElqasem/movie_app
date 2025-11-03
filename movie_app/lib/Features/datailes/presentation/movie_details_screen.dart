@@ -6,12 +6,15 @@ class MovieDetailsScreen extends StatelessWidget {
   final String title;
   final double rating;
   final String genre;
-
+  final String posterPath;
+  final String overView;
   const MovieDetailsScreen({
     super.key,
     required this.title,
     required this.rating,
     required this.genre,
+    required this.posterPath,
+    required this.overView,
   });
 
   @override
@@ -33,14 +36,41 @@ class MovieDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Container(
-                height: 250.h,
-                width: 180.w,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
-                  borderRadius: BorderRadius.circular(16.r),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.r),
+                child: Image.network(
+                  posterPath,
+                  height: 250.h,
+                  width: 180.w,
+                  fit: BoxFit.cover,
+                  // في حالة فشل التحميل
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      height: 120.h,
+                      width: 85.w,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: const Icon(Icons.image_not_supported),
+                    );
+                  },
+                  // في حالة التحميل (loading)
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      height: 120.h,
+                      width: 85.w,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: const Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    );
+                  },
                 ),
-                child: const Icon(Icons.image_not_supported, size: 60),
               ),
             ),
             SizedBox(height: 20.h),
@@ -70,7 +100,7 @@ class MovieDetailsScreen extends StatelessWidget {
             ),
             SizedBox(height: 6.h),
             Text(
-              'A computer programmer discovers that reality as he knows it is a simulation created by machines.',
+              overView,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
