@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/Core/helper/extensions.dart';
+import 'package:movie_app/Core/routing/routes.dart';
 import 'package:movie_app/Core/theme/cubit/theme_cubit.dart';
-import 'package:movie_app/Features/datailes/presentation/movie_details_screen.dart';
 import 'package:movie_app/Features/home/presentation/widgets/movie_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -57,16 +58,11 @@ class HomeScreen extends StatelessWidget {
                     rating: movie['rating'] as double,
                     genre: movie['genre'] as String,
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => MovieDetailsScreen(
-                            title: movie['title'] as String,
-                            rating: movie['rating'] as double,
-                            genre: movie['genre'] as String,
-                          ),
-                        ),
-                      );
+                      context.pushNamed(Routes.detailsMovieScreen, arguments: {
+                        'title': movie['title'],
+                        'rating': movie['rating'],
+                        'genre': movie['genre'],
+                      });
                     },
                   );
                 },
