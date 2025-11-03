@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/Core/di/service_locator.dart';
+import 'package:movie_app/Core/routing/app_router.dart';
+import 'package:movie_app/Core/routing/routes.dart';
 import 'package:movie_app/Core/theme/cubit/theme_cubit.dart';
 import 'package:movie_app/Core/theme/dark_theme.dart';
 import 'package:movie_app/Core/theme/light_theme.dart';
@@ -12,12 +14,12 @@ void main() async {
 
   // Initialize dependency injection
   await initServiceLocator();
-  runApp(const MyApp());
+  runApp(MyApp(appRouter: AppRouter()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  const MyApp({super.key, required this.appRouter});
+  final AppRouter appRouter;
   @override
   Widget build(BuildContext context) {
     final themeCubit = sl<ThemeCubit>();
@@ -33,6 +35,8 @@ class MyApp extends StatelessWidget {
             builder: (context, state) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
+                initialRoute: Routes.homeScreen,
+                onGenerateRoute: appRouter.generateRoute,
                 theme: lightTheme,
                 darkTheme: darkTheme,
                 themeMode: state.themeMode,

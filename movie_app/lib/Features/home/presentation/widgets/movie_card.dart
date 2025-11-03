@@ -5,6 +5,7 @@ class MovieCard extends StatelessWidget {
   final String title;
   final double rating;
   final String genre;
+  final String posterPath;
   final VoidCallback onTap;
 
   const MovieCard({
@@ -13,6 +14,7 @@ class MovieCard extends StatelessWidget {
     required this.rating,
     required this.genre,
     required this.onTap,
+    required this.posterPath,
   });
 
   @override
@@ -28,16 +30,46 @@ class MovieCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
-              height: 120.h,
-              width: 85.w,
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(8.r),
+            // ✅ صورة الفيلم
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.r),
+              child: Image.network(
+                posterPath,
+                height: 120.h,
+                width: 85.w,
+                fit: BoxFit.cover,
+                // في حالة فشل التحميل
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 120.h,
+                    width: 85.w,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: const Icon(Icons.image_not_supported),
+                  );
+                },
+                // في حالة التحميل (loading)
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    height: 120.h,
+                    width: 85.w,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: const Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  );
+                },
               ),
-              child: const Icon(Icons.image_not_supported),
             ),
             SizedBox(width: 12.w),
+
+            // ✅ بيانات الفيلم
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,8 +80,10 @@ class MovieCard extends StatelessWidget {
                     children: [
                       const Icon(Icons.star, color: Colors.amber, size: 18),
                       SizedBox(width: 4.w),
-                      Text('$rating/10',
-                          style: Theme.of(context).textTheme.bodyMedium),
+                      Text(
+                        '$rating/10',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                       SizedBox(width: 10.w),
                     ],
                   ),
@@ -57,6 +91,7 @@ class MovieCard extends StatelessWidget {
                 ],
               ),
             ),
+
             const Icon(Icons.arrow_forward_ios, size: 16),
           ],
         ),

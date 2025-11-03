@@ -20,7 +20,7 @@ class MovieModel {
       id: json['id'],
       title: json['title'],
       overview: json['overview'],
-      posterPath: json['poster_path'] ?? '',
+      posterPath: "https://image.tmdb.org/t/p/w500${json['poster_path']}",
       voteAverage: (json['vote_average'] as num).toDouble(),
       releaseDate: json['release_date'] ?? '',
     );
