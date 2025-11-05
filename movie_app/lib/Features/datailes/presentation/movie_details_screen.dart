@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/Core/theme/app_colors.dart';
+import 'package:movie_app/Features/datailes/presentation/widgets/custom_poster_display.dart';
+
+import 'widgets/custom_description.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   final String title;
@@ -36,41 +39,10 @@ class MovieDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.r),
-                child: Image.network(
-                  posterPath,
-                  height: 250.h,
-                  width: 180.w,
-                  fit: BoxFit.cover,
-                  // في حالة فشل التحميل
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      height: 120.h,
-                      width: 85.w,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      child: const Icon(Icons.image_not_supported),
-                    );
-                  },
-                  // في حالة التحميل (loading)
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Container(
-                      height: 120.h,
-                      width: 85.w,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      child: const Center(
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                    );
-                  },
-                ),
+              child: CustomPosterDisplay(
+                posterPath: posterPath,
+                height: 250,
+                width: 180,
               ),
             ),
             SizedBox(height: 20.h),
@@ -94,15 +66,9 @@ class MovieDetailsScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20.h),
-            Text(
-              'Description',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            SizedBox(height: 6.h),
-            Text(
-              overView,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            CustomDescription(
+              overView: overView,
+            )
           ],
         ),
       ),

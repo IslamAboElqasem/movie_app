@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/Features/datailes/presentation/widgets/custom_poster_display.dart';
 
 class MovieCard extends StatelessWidget {
   final String title;
@@ -31,42 +32,7 @@ class MovieCard extends StatelessWidget {
         child: Row(
           children: [
             // ✅ صورة الفيلم
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.r),
-              child: Image.network(
-                posterPath,
-                height: 120.h,
-                width: 85.w,
-                fit: BoxFit.cover,
-                // في حالة فشل التحميل
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    height: 120.h,
-                    width: 85.w,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    child: const Icon(Icons.image_not_supported),
-                  );
-                },
-                // في حالة التحميل (loading)
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Container(
-                    height: 120.h,
-                    width: 85.w,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    child: const Center(
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  );
-                },
-              ),
-            ),
+            CustomPosterDisplay(posterPath: posterPath, height: 120, width: 85),
             SizedBox(width: 12.w),
 
             // ✅ بيانات الفيلم
