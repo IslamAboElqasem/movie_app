@@ -8,12 +8,15 @@ import 'package:movie_app/Core/routing/routes.dart';
 import 'package:movie_app/Core/theme/cubit/theme_cubit.dart';
 import 'package:movie_app/Core/theme/dark_theme.dart';
 import 'package:movie_app/Core/theme/light_theme.dart';
+import 'package:movie_app/Features/home/data/models/movie_model.dart';
 import 'package:movie_app/Features/home/presentation/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox('moviesBox');
+  Hive.registerAdapter(MovieModelAdapter()); // ✅ مهم جدًا
+
+  await Hive.openBox<MovieModel>('moviesBox'); // ✅ نوع الـ Box MovieModel
   // Initialize dependency injection
   await initServiceLocator();
   runApp(MyApp(appRouter: AppRouter()));

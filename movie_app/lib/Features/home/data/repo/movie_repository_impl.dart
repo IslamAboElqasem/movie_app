@@ -8,35 +8,18 @@ class MovieRepositoryImpl {
   MovieRepositoryImpl(this.apiService);
 
   Future<List<MovieModel>> getPopularMovies() async {
-    final box = Hive.box('moviesBox');
+    final box = Hive.box<MovieModel>('moviesBox');
 
-    // *** جرب الأول تجيب من الكاش
-    final cachedData = box.get('popularMovies');
-    if (cachedData != null) {
-      // لو الكاش موجود رجعه مباشرة
-      final moviesFromCache = (cachedData as List)
-          .map((e) => MovieModel.fromJson(Map<String, dynamic>.from(e)))
-          .toList();
-      return moviesFromCache;
+    // ✅ لو فيه كاش رجعه
+    if (box.isNotEmpty) {
+      return box.values.toList();
     }
 
-    // *** لو مفيش كاش: نجيب من الـ API
+    // ✅ لو مفيش كاش روح للـ API
     final moviesFromApi = await apiService.getPopularMovie();
 
-    // *** نخزن الداتا في الكاش
-    box.put(
-        'popularMovies',
-        moviesFromApi
-            .map((e) => {
-                  "id": e.id,
-                  "title": e.title,
-                  "overview": e.overview,
-                  "poster_path": e.posterPath
-                      .replaceFirst("https://image.tmdb.org/t/p/w500", ''),
-                  "vote_average": e.voteAverage,
-                  "release_date": e.releaseDate,
-                })
-            .toList());
+    // ✅ خزّن مباشرة كـ Models
+    await box.addAll(moviesFromApi);
 
     return moviesFromApi;
   }
