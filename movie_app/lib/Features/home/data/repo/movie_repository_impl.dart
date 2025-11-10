@@ -7,20 +7,20 @@ class MovieRepositoryImpl {
 
   MovieRepositoryImpl(this.apiService);
 
-  Future<List<MovieModel>> getPopularMovies() async {
+  Future<List<MovieModel>> getPopularMovies({int page = 1}) async {
     final box = Hive.box<MovieModel>('moviesBox');
 
-    // ✅ لو فيه كاش رجعه
-    if (box.isNotEmpty) {
+    // أول صفحة: لو فيه كاش رجعه
+    if (page == 1 && box.isNotEmpty) {
       return box.values.toList();
     }
 
-    // ✅ لو مفيش كاش روح للـ API
-    final moviesFromApi = await apiService.getPopularMovie();
+    // نطلب الصفحة المطلوبة
+    final moviesFromApi = await apiService.getPopularMovie(page: page);
 
-    // ✅ خزّن مباشرة كـ Models
+    // نضيفهم للكاش بدون مسح القديم
     await box.addAll(moviesFromApi);
 
-    return moviesFromApi;
+    return box.values.toList(); // ✅ نرجع البيانات كلها لحد اللحظة
   }
 }

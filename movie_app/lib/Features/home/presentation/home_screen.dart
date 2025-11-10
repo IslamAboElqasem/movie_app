@@ -90,11 +90,15 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  context.read<GetPopularMovieCubit>().fetchPopularMovies();
+              Builder(
+                builder: (context) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      context.read<GetPopularMovieCubit>().loadMoreMovies();
+                    },
+                    child: const Text('Load More Movies'),
+                  );
                 },
-                child: const Text('Load More Movies'),
               ),
             ],
           ),

@@ -19,7 +19,7 @@ Future<void> initServiceLocator() async {
   // Register Cubits
   sl.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
 
-  sl.registerLazySingleton<GetPopularMovieCubit>(
+  sl.registerFactory<GetPopularMovieCubit>(
     () => GetPopularMovieCubit(sl()),
   );
 }
